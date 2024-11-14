@@ -4,9 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getSingleProduct } from "../apiLayer";
 
 const Detailpage = () => {
-  const params = useParams();
-  console.log(params, "params");
-  const [productId, setProductId] = useState(params.productId || "");
+  const { productId } = useParams(); // Directly destructure the productId from useParams
   const [productData, setProductData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,20 +20,27 @@ const Detailpage = () => {
     setIsModalOpen(false);
     setSelectedImage("");
   };
+
+  // Fetch product data when productId changes
   useEffect(() => {
-    setProductId(params.productId);
-  }, [productId]);
-  useEffect(() => {
-    getSingleProduct(productId).then((data) => {
-      setProductData(data);
-      setIsLoading(false);
-    });
-  }, []);
-  console.log(productData, "productData");
+    if (productId) {
+      setIsLoading(true); // Set loading state before fetching
+      getSingleProduct(productId)
+        .then((data) => {
+          setProductData(data);
+          setIsLoading(false); // Set loading to false once data is fetched
+        })
+        .catch((error) => {
+          console.error("Failed to fetch product:", error);
+          setIsLoading(false); // Handle error and stop loading
+        });
+    }
+  }, [productId]); // Re-run when productId changes
+
   return (
     <div className="py-8">
       <a
-        href=""
+        href="#"
         className="ml-8 text-xl font-semibold underline"
         onClick={() => navigate("/")}
       >
