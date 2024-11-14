@@ -14,8 +14,7 @@ function App() {
           path: "/",
           element: <Homepage />,
         },
-        { path: "/products/:productId", element: <Detailpage /> }
-
+        { path: "/products/:productId", element: <Detailpage /> },
         { path: "/cart", element: <Cartpage /> },
       ],
     },
