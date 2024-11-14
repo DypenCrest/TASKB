@@ -11,14 +11,15 @@ function App() {
       element: <Layoutpage />,
       children: [
         {
-          path: "/",
+          path: "",
           element: <Homepage />,
         },
-        { path: "/products/:productId", element: <Detailpage /> },
-        { path: "/cart", element: <Cartpage /> },
+        { path: "products/:productId", element: <Detailpage /> },
+        { path: "cart", element: <Cartpage /> },
       ],
     },
   ]);
+
   return (
     <>
       <RouterProvider router={router} />
